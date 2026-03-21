@@ -68,6 +68,10 @@ actions:
   # ------> https://winaero.com/blog/how-to-enable-cortana-on-lock-screen/
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Speech_OneCore\Preferences', value: 'VoiceActivationEnableAboveLockscreen', type: REG_DWORD, data: '0'}
 
-  # Disable Store results in Search (25H2)
+  # === Disable Store results in Search (25H2)
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\WinStore.Tasks.WindowsSearchTask', value: 'ActivationType', type: REG_DWORD, data: '4294967295'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\WinStore.Tasks.WindowsSearchTask', value: 'Server', type: REG_SZ, data: ''}
+
+  # === Prevent WebView2 spawning from SearchHost
+  # ------> https://reddit.com/r/WindowsHelp/comments/1lfu325/comment/n2nk50h
+  - !registryValue: {path: 'HKLM\SYSTEM\ControlSet001\Policies\Microsoft\FeatureManagement\Overrides', value: '1694661260', type: REG_DWORD, data: '0'}
