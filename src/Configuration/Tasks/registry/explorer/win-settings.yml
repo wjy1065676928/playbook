@@ -287,23 +287,13 @@ actions:
   - !registryValue: {path: 'HKCU\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy', value: 'HasAccepted', type: REG_DWORD, data: '0'}
   - !registryValue: {path: 'HKU\.DEFAULT\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy', value: 'HasAccepted', type: REG_DWORD, data: '0'}
 
-  # ======> Inking & typing personalization
-  # === Getting to know you - Off
-  # ------> https://www.tenforums.com/tutorials/118127-turn-off-inking-typing-personalization-windows-10-a.html
-  - !registryValue: {path: 'HKCU\Software\Microsoft\InputPersonalization', value: 'RestrictImplicitInkCollection', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKCU\Software\Microsoft\InputPersonalization', value: 'RestrictImplicitTextCollection', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKCU\Software\Microsoft\InputPersonalization\TrainedDataStore', value: 'HarvestContacts', type: REG_DWORD, data: '0'}
-  - !registryValue: {path: 'HKCU\Software\Microsoft\Personalization\Settings', value: 'AcceptedPrivacyPolicy', type: REG_DWORD, data: '0'}
-
-  # === Turn off automatic learning - Enabled
-  - !registryValue: {path: 'HKCU\SOFTWARE\Policies\Microsoft\InputPersonalization', value: 'RestrictImplicitInkCollection', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Policies\Microsoft\InputPersonalization', value: 'RestrictImplicitTextCollection', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\InputPersonalization', value: 'RestrictImplicitInkCollection', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\InputPersonalization', value: 'RestrictImplicitTextCollection', type: REG_DWORD, data: '1'}
-
-  # === Allow users to enable online speech recognition services - Disabled
-  # ------> If this policy is disabled, speech services will be disabled, and users cannot enable speech services via settings.
-  # - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\InputPersonalization', value: 'AllowInputPersonalization', type: REG_DWORD, data: '0'}
+  # === Inking & typing personalization
+  - !run:
+    path: "%ProgramFiles%\\Revision Tool"
+    exe: "revitool.exe"
+    args: "tweaks personalization input-personalization disable"
+    wait: true
+    runas: currentUserElevated
 
 
   # ======> Diagnostics & feedback

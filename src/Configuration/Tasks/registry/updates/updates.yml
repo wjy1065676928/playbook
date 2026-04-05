@@ -14,15 +14,14 @@ actions:
   # ------> NOTE: Used to break Xbox Sign-in in older Windows 10 versions
   # - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU', value: 'NoAutoUpdate', type: REG_DWORD, data: '1'}
 
-   # === Pause Windows Updates to 2038 January 19
-   # === FlightSettingsMaxPauseDays is responsible for the rest regs to work
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings', value: 'FlightSettingsMaxPauseDays', type: REG_DWORD, data: '5269'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings', value: 'PauseFeatureUpdatesStartTime', type: REG_SZ, data: '2023-08-17T12:47:51Z'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings', value: 'PauseFeatureUpdatesEndTime', type: REG_SZ, data: '2038-01-19T03:14:07Z'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings', value: 'PauseQualityUpdatesStartTime', type: REG_SZ, data: '2023-08-17T12:47:51Z'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings', value: 'PauseQualityUpdatesEndTime', type: REG_SZ, data: '2038-01-19T03:14:07Z'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings', value: 'PauseUpdatesStartTime', type: REG_SZ, data: '2023-08-17T12:47:51Z'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings', value: 'PauseUpdatesExpiryTime', type: REG_SZ, data: '2038-01-19T03:14:07Z'}
+  # === Pause Windows Updates to 2038 January 19
+  # === FlightSettingsMaxPauseDays is responsible for the rest regs to work
+  - !run:
+    path: "%ProgramFiles%\\Revision Tool"
+    exe: "revitool.exe"
+    args: "tweaks performance wu-pause-updates enable"
+    wait: true
+    runas: currentUserElevated
   
   # === Windows Update Notifications - Disabled
   # ------> https://www.askvg.com/fix-how-to-stop-automatic-forced-upgrade-to-feature-updates-in-windows-10/
