@@ -5,7 +5,12 @@ privilege: TrustedInstaller
 actions:
 
   # === Hide stripped components from Settings
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer', value: 'SettingsPageVisibility', type: REG_SZ, data: 'hide:cortana;privacy-feedback;windowsinsider;home'}
+  - !run:
+    path: "%ProgramFiles%\\Revision Tool"
+    exe: "revitool.exe"
+    args: 'registry hide-page --value "cortana,privacy-feedback,windowsinsider,home"'
+    wait: true
+    runas: currentUserElevated
 
   # === Hide Insider page from Settings --> Windows Updates
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\WindowsSelfHost\UI\Visibility', value: 'HideInsiderPage', type: REG_DWORD, data: '1'}
@@ -177,6 +182,13 @@ actions:
   - !registryValue: {path: 'HKLM\SYSTEM\Maps', value: 'AutoUpdateEnabled', type: REG_DWORD, data: '0'}
 
   # === Resume - Off
+  - !run:
+    path: "%ProgramFiles%\\Revision Tool"
+    exe: "revitool.exe"
+    args: 'registry hide-page --value "crossdevice"'
+    wait: true
+    runas: currentUserElevated
+    option: "remove-appx-yourphone"
   - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\CrossDeviceResume\Configuration', value: 'IsResumeAllowed', type: REG_DWORD, data: '0', option: "remove-appx-yourphone"}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\PolicyManager\default\Connectivity\DisableCrossDeviceResume', value: 'value', type: REG_DWORD, data: '1', option: "remove-appx-yourphone"}
   - !registryValue: {path: 'HKLM\SYSTEM\ControlSet001\Policies\Microsoft\FeatureManagement\Overrides', value: '1387020943', type: REG_DWORD, data: '0', option: "remove-appx-yourphone"} # ID (56517033) found in "C:\Windows\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\appxmanifest.xml" 
